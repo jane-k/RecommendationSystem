@@ -4,6 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import requests
 import numpy as np
 import pandas as pd
+import json
 
 app = Flask(__name__)
 
@@ -111,6 +112,8 @@ def emplace():
                     (result['calories'] < (data.calories*1.1))]
 
     result = result.to_json(orient='records', force_ascii=False)
+
+    result = json.loads(result)
 
     return make_response(jsonify(result), 200)
 
