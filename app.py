@@ -2,6 +2,7 @@ from flask import Flask, make_response, jsonify, request
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import requests
+import numpy as np
 import pandas as pd
 
 app = Flask(__name__)
@@ -9,14 +10,15 @@ app = Flask(__name__)
 rows = []
 
 
-@app.route('/getdb', methods=['POST'])
+@app.route('/getDB')
 def emplace():
+    prod_name = ''
+
+    prod_name = request.args.get('name')
 
     res = requests.get('http://43.201.114.241:8080/userinfo/product/')
 
     rows = res.json()
-
-    prod_name = "베지 돈까스"
 
     product_name = []
     ingredients_list = []
@@ -114,4 +116,4 @@ def emplace():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, debug=True)
